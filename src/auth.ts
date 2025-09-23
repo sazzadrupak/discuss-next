@@ -6,7 +6,6 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID!;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET!;
-const AUTH_SECRET = process.env.AUTH_SECRET!;
 
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
   throw new Error('Missing github oauth credentials');
@@ -27,6 +26,7 @@ export const {
   ],
   callbacks: {
     // Usually not needed, here we are fixing a bug in next-auth
+    // eslint-disable-next-line  @typescript-eslint/no-explicit-any
     async session({ session, user }: any) {
       if (session && user) {
         session.user.id = user.id;

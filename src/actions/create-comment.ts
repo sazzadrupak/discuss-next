@@ -1,8 +1,5 @@
 'use server';
 
-export async function createCommnet(params: {
-  title: string;
-  content: string;
-}) {
+export async function createCommnet() {
   // TODO: revalidate the post show page
 }
