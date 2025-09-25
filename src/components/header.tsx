@@ -1,13 +1,14 @@
 import {
-  Input,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
 } from '@nextui-org/react';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 import HeaderAuth from '@/components/header-auth';
+import SearchInput from '@/components/search-input';
 
 export default function Header() {
   return (
@@ -19,11 +20,10 @@ export default function Header() {
       </NavbarBrand>
       <NavbarContent justify="center">
         <NavbarItem>
-          <Input
-            placeholder="Search topics..."
-            aria-label="Search topics"
-            className="w-[300px]"
-          />
+          {/* The SearchInput is a client component and uses useSearchParams hooks and nextjs wants us to wrap it in Suspense */}
+          <Suspense>
+            <SearchInput />
+          </Suspense>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">

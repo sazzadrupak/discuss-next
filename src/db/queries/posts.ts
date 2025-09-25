@@ -49,3 +49,21 @@ export async function fetchTopPosts(): Promise<PostForListDisplay[]> {
     take: 5,
   });
 }
+
+export async function fetchPostsBySearchTerm(
+  term: string
+): Promise<PostForListDisplay[]> {
+  return db.post.findMany({
+    where: {
+      OR: [{ title: { contains: term } }, { content: { contains: term } }],
+    },
+    include: {
+      user: { select: { name: true } },
+      topic: { select: { slug: true } },
+      _count: {
+        select: { comments: true },
+      },
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+}
