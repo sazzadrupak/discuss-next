@@ -29,3 +29,23 @@ export async function fetchPostsByTopicSlug(slug: string) {
     orderBy: { createdAt: 'desc' },
   });
 }
+
+export async function fetchTopPosts(): Promise<PostForListDisplay[]> {
+  return db.post.findMany({
+    orderBy: [
+      {
+        comments: {
+          _count: 'desc',
+        },
+      },
+    ],
+    include: {
+      user: { select: { name: true } },
+      topic: { select: { slug: true } },
+      _count: {
+        select: { comments: true },
+      },
+    },
+    take: 5,
+  });
+}
